@@ -12,6 +12,10 @@ repo_name := go-hao
 # Comment it out or leave it blank for default value (Root folder name of the project)
 project_name :=
 
+# Name for main executable of the project
+# Comment it out or leave it blank for default value (main)
+main_name :=
+
 # Proxy address for GOPROXY
 # Do not add https:// or http:// in front of the address
 # Comment it out or leave it blank for default value (proxy.golang.org)
@@ -25,6 +29,10 @@ proxy_addr := goproxy.cn
 # Auto set variables
 ifndef project_name
 project_name := $(notdir $(shell pwd))
+endif
+
+ifndef main_name
+main_name := main
 endif
 
 module_name := $(project_name)
@@ -76,14 +84,14 @@ help:
 ## go.mod: initialize the project
 go.mod:
 	go mod init $(module_name)
-	@if [ ! -f ./cmd/$(project_name)/main.go ]; then \
-		mkdir -p ./cmd/$(project_name); \
-		touch ./cmd/$(project_name)/main.go; \
-		echo "package main\n" >> ./cmd/$(project_name)/main.go; \
-		echo "import \"fmt\"\n" >> ./cmd/$(project_name)/main.go; \
-		echo "func main() {" >> ./cmd/$(project_name)/main.go; \
-		echo "\tfmt.Println(\"Hello go!\")" >> ./cmd/$(project_name)/main.go; \
-		echo "}" >> ./cmd/$(project_name)/main.go; \
+	@if [ ! -f ./cmd/$(main_name)/main.go ]; then \
+		mkdir -p ./cmd/$(main_name); \
+		touch ./cmd/$(main_name)/main.go; \
+		echo "package main\n" >> ./cmd/$(main_name)/main.go; \
+		echo "import \"fmt\"\n" >> ./cmd/$(main_name)/main.go; \
+		echo "func main() {" >> ./cmd/$(main_name)/main.go; \
+		echo "\tfmt.Println(\"Hello go!\")" >> ./cmd/$(main_name)/main.go; \
+		echo "}" >> ./cmd/$(main_name)/main.go; \
 	fi
 
 ## set: set go environment variables - GO111MODULE(on) and GOPROXY
@@ -95,12 +103,12 @@ set:
 ## run: run the project
 .PHONY: run
 run: build
-	./bin/$(project_name)
+	./bin/$(main_name)
 
 ## build: build the project
 .PHONY: build
 build: tidy
-	go build -v -o ./bin/$(project_name) ./cmd/$(project_name)
+	go build -v -o ./bin/$(main_name) ./cmd/$(main_name)
 
 ## tidy: tidy modfile and format code
 .PHONY: tidy
@@ -130,7 +138,7 @@ all: $(for_cmd_tars)
 ## swag: swag init command
 .PHONY: swag
 swag:
-	swag init -g ./cmd/$(project_name)/main.go
+	swag init -g ./cmd/$(main_name)/main.go
 
 # ############################################################# #
 # Docker services                                               #

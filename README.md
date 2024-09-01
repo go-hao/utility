@@ -19,11 +19,15 @@ make help
 # The project module name will be: [repo_addr/][repo_name/]project_name
 # Comment it out or leave it blank to unset a variable
 repo_addr := gitlab.com
-repo_name := joshtrick
+repo_name := go-hao
 
 # Project name
 # Comment it out or leave it blank for default value (Root folder name of the project)
 project_name :=
+
+# Name for main executable of the project
+# Comment it out or leave it blank for default value (main)
+main_name :=
 
 # Proxy address for GOPROXY
 # Do not add https:// or http:// in front of the address
