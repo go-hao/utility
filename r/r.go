@@ -43,10 +43,6 @@ func (r *R) SetMessageWithError(err error) {
 	message := fmt.Sprintf("[error] %s", err.Error())
 	r.SetMessage(message)
 }
-func (r *R) SetCodeAndMessageWithError(err error) {
-	r.SetCode(APICode(err))
-	r.SetMessageWithError(err)
-}
 
 func (r *R) JSON(c *gin.Context) {
 	c.JSON(r.Code, r)
