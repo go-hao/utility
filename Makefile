@@ -76,7 +76,6 @@ endif
 ## help: show help
 .PHONY: help
 help:
-	echo $(for_docker_tars_up)
 	@echo Usage\: make [option]
 	@echo Options\:
 	@sed -n 's/^##//p' $(MAKEFILE_LIST) | column -t -s ':' |  sed -e 's/^/ /'
